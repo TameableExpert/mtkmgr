@@ -9,7 +9,6 @@ config_folder = home_dir + "/.mtkmgr/"
 conf_file = config_folder + "mtkmgr.cfg"
 log_file = config_folder + "mtkmgr.log"
 
-
 def Main():
     #
     # Run Setup - Create config_folder, conf_file, and log_file
