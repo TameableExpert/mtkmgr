@@ -40,27 +40,37 @@ class mtkmgr():
             print formatted_data # Print out to the terminal so I don't have to keep looking in the log file.
 
     def LoadConfig(self):
-        with open(self.conf_fileName, "w+") as conf_file:
-                loaded_config = conf_file.read() # Creates empty json file if config doesn't exist.
-                if len(loaded_config) > 0:
-                    self.current_config = json.loads(loaded_config)
+        if os.path.isfile(self.conf_fileName):
+            with open(self.conf_fileName, "r+") as conf_file:
+                    loaded_config = conf_file.read() # Creates empty json file if config doesn't exist.
+                    if len(loaded_config) > 0:
+                        self.current_config = json.loads(loaded_config, encoding="utf-8")
+        else:
+            with open(self.conf_fileName, "w+") as conf_file:
+                    loaded_config = conf_file.read() # Creates empty json file if config doesn't exist.
+                    if len(loaded_config) > 0:
+                        self.current_config = json.loads(loaded_config, encoding="utf-8")
 
     def SaveConfig(self):
         with open(self.conf_fileName, "w+") as conf_file:
-                conf_file.write(self.current_config) # Creates empty json file if config doesn't exist.
+            json_str = json.dumps(self.current_config, encoding="utf-8")
+            conf_file.write(json_str) # Creates empty json file if config doesn't exist.
 
     def AddHost(self):
-        ipaddress =  entry_ip_address.get()
-        print ipaddress
-        for key in self.current_config:
-            if key == "hosts":
-                self.current_config[key][ipaddress] = {}
-                self.SaveConfig()
+        try:
+            keys =  enumerate(self.current_config)
+            if "hosts" not in keys:
+                self.current_config["hosts"] = {}
+            ipaddress =  entry_ip_address.get()
+            self.current_config["hosts"][ipaddress] = {}
+            self.SaveConfig()
+        except Exception, err:
+            print "Something went wrong!", err
 
     def SetupInterface(self):
         app_window = Tkinter.Tk()
         app_window.title("MikroTik Manager")
-        app_window.geometry("800x600")
+        app_window.geometry("400x300")
         
         # Existing Host List
         frame_hosts = Tkinter.Frame(app_window)
@@ -70,10 +80,11 @@ class mtkmgr():
         listbox_hosts = Tkinter.Listbox()
 
         if(self.current_config != {}):
-            config_keys = self.current_config.keys
-            if(config_keys["hosts"] != None & config_keys["hosts"] != {}):
-                print config_keys["hosts"]
-                print "It works!"
+            # TODO:Check to see if config has hosts, if not, create a blank instance.
+                
+            # Build list using host records.
+            if len(self.current_config["hosts"]) > 0:
+                self.LogData("There are things here.")
             else:
                 self.LogData("Error: No records found.")
         else:
@@ -90,7 +101,7 @@ class mtkmgr():
         global entry_ip_address
         entry_ip_address = Tkinter.Entry(frame_ip_address)
         entry_ip_address.pack(side=Tkinter.LEFT)
-        button_add_ip_address = Tkinter.Button(frame_ip_address, text="Add", Command=self.AddHost())
+        button_add_ip_address = Tkinter.Button(frame_ip_address, text="Add", command=self.AddHost)
         button_add_ip_address.pack(side=Tkinter.LEFT)
 
         # Display the window.
