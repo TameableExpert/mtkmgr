@@ -67,6 +67,9 @@ class mtkmgr():
         except Exception, err:
             print "Something went wrong!", err
 
+    def ReturnSelectedHost(self):
+        print listbox_hosts.selection_get()
+
     def SetupInterface(self):
         app_window = Tkinter.Tk()
         app_window.title("MikroTik Manager")
@@ -77,6 +80,7 @@ class mtkmgr():
         frame_hosts.pack()
         label_hosts = Tkinter.Label(frame_hosts, text="Hosts")
         label_hosts.pack()
+        global listbox_hosts
         listbox_hosts = Tkinter.Listbox()
 
         if(self.current_config != {}):
@@ -84,6 +88,8 @@ class mtkmgr():
                 
             # Build list using host records.
             if len(self.current_config["hosts"]) > 0:
+                for key, value in self.current_config["hosts"].items():
+                    listbox_hosts.insert(0, key) # Add host to listbox.
                 self.LogData("There are things here.")
             else:
                 self.LogData("Error: No records found.")
@@ -91,7 +97,6 @@ class mtkmgr():
             self.LogData("Error: Configuration file empty.")
 
         listbox_hosts.pack()
-
 
         # IP Address Entry
         frame_ip_address = Tkinter.Frame(app_window)
@@ -103,6 +108,12 @@ class mtkmgr():
         entry_ip_address.pack(side=Tkinter.LEFT)
         button_add_ip_address = Tkinter.Button(frame_ip_address, text="Add", command=self.AddHost)
         button_add_ip_address.pack(side=Tkinter.LEFT)
+
+        frame_SelectedHostActions = Tkinter.Frame(app_window)
+        frame_SelectedHostActions.pack(side=Tkinter.BOTTOM)
+
+        btn_getSelectedHost = Tkinter.Button(frame_SelectedHostActions, text="Get Host Value", command=self.ReturnSelectedHost)
+        btn_getSelectedHost.pack()
 
         # Display the window.
         app_window.mainloop()
