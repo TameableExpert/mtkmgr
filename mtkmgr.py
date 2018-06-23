@@ -101,21 +101,21 @@ class mtkmgr():
         global listbox_hosts
         listbox_hosts = Tkinter.Listbox()
         self.HostList_Load()
-        listbox_hosts.pack()
+        listbox_hosts.pack(fill=Tkinter.BOTH, expand=1)
 
         # IP Address Entry
         frame_ip_address = Tkinter.Frame(app_window)
-        frame_ip_address.pack()
+        frame_ip_address.pack(fill=Tkinter.BOTH, expand=1)
         label_ip_address = Tkinter.Label(frame_ip_address, text="IP Address")
         label_ip_address.pack(side=Tkinter.LEFT)
         global entry_ip_address
         entry_ip_address = Tkinter.Entry(frame_ip_address)
-        entry_ip_address.pack(side=Tkinter.LEFT)
+        entry_ip_address.pack(fill=Tkinter.X, expand=1, side=Tkinter.LEFT)
         button_add_ip_address = Tkinter.Button(frame_ip_address, text="Add", command=self.AddHost)
-        button_add_ip_address.pack(side=Tkinter.LEFT)
+        button_add_ip_address.pack(fill=Tkinter.X, expand=1, side=Tkinter.LEFT)
 
         frame_SelectedHostActions = Tkinter.Frame(app_window)
-        frame_SelectedHostActions.pack(side=Tkinter.BOTTOM)
+        frame_SelectedHostActions.pack(fill=Tkinter.BOTH, expand=1, side=Tkinter.BOTTOM)
 
         btn_getSelectedHost = Tkinter.Button(frame_SelectedHostActions, text="Get Host Value", command=self.ReturnSelectedHost)
         btn_getSelectedHost.pack()
