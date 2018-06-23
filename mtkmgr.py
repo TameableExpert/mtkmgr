@@ -2,7 +2,7 @@
 # MikroTik Manager - Making managing MikroTiks magical.
 #
 
-import sys, os, io, json, datetime, Tkinter
+import sys, os, io, json, datetime, Tkinter, subprocess, paramiko
 
 class mtkmgr():
     def __init__(self):
@@ -74,6 +74,14 @@ class mtkmgr():
         self.current_config['hosts'].pop(selected_key)
         self.SaveConfig()
 
+    def Hosts_ConnectHost(self):
+        host_key = Hosts_ListBox.selection_get()
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        client.load_system_host_keys()
+        client.connect('127.0.0.1')
+        stdin, stdout, stderr = client.exec_command("touch /home/grimm/Desktop/test.txt")
+        client.close()
 
     def HostList_Clear(self):
         Hosts_ListBox.delete(0, 'end')
@@ -124,9 +132,12 @@ class mtkmgr():
 
         frame_SelectedHostActions = Tkinter.Frame(app_window)
         frame_SelectedHostActions.pack(fill=Tkinter.BOTH, expand=1, side=Tkinter.BOTTOM)
+        
+        #btn_getSelectedHost = Tkinter.Button(frame_SelectedHostActions, text="Get Host Value", command=self.ReturnSelectedHost)
+        #btn_getSelectedHost.pack()
 
-        btn_getSelectedHost = Tkinter.Button(frame_SelectedHostActions, text="Get Host Value", command=self.ReturnSelectedHost)
-        btn_getSelectedHost.pack()
+        btn_connectHost = Tkinter.Button(frame_SelectedHostActions, text="Connect", command=self.Hosts_ConnectHost)
+        btn_connectHost.pack()
 
         btn_removeHost = Tkinter.Button(frame_SelectedHostActions, text="Remove", command=self.Hosts_RemoveHost)
         btn_removeHost.pack()
