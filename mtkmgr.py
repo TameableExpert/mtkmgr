@@ -56,7 +56,7 @@ class mtkmgr():
             json_str = json.dumps(self.current_config)
             conf_file.write(json_str) # Creates empty json file if config doesn't exist.
 
-    def AddHost(self):
+    def Hosts_AddHost(self):
         try:
             ipaddress =  entry_ip_address.get()
             self.current_config['hosts'][ipaddress] = {}
@@ -67,8 +67,16 @@ class mtkmgr():
         except Exception, err:
             print "Something went wrong!", err
 
+    def Hosts_RemoveHost(self):
+        selected_key = Hosts_ListBox.selection_get()
+        selection = Hosts_ListBox.curselection()
+        Hosts_ListBox.delete(selection[0])
+        self.current_config['hosts'].pop(selected_key)
+        self.SaveConfig()
+
+
     def HostList_Clear(self):
-        listbox_hosts.delete(0, 'end')
+        Hosts_ListBox.delete(0, 'end')
 
     def HostList_Load(self):
         self.HostList_Clear()
@@ -78,7 +86,7 @@ class mtkmgr():
             # Build list using host records.
             if len(self.current_config['hosts']) > 0:
                 for key, value in self.current_config['hosts'].items():
-                    listbox_hosts.insert(0, key) # Add host to listbox.
+                    Hosts_ListBox.insert(0, key) # Add host to listbox.
                 self.LogData("There are things here.")
             else:
                 self.LogData("Error: No records found.")
@@ -86,7 +94,7 @@ class mtkmgr():
             self.LogData("Error: Configuration file empty.")
 
     def ReturnSelectedHost(self):
-        print listbox_hosts.selection_get()
+        print Hosts_ListBox.selection_get()
 
     def SetupInterface(self):
         app_window = Tkinter.Tk()
@@ -98,10 +106,10 @@ class mtkmgr():
         frame_hosts.pack()
         label_hosts = Tkinter.Label(frame_hosts, text="Hosts")
         label_hosts.pack()
-        global listbox_hosts
-        listbox_hosts = Tkinter.Listbox()
+        global Hosts_ListBox
+        Hosts_ListBox = Tkinter.Listbox()
         self.HostList_Load()
-        listbox_hosts.pack(fill=Tkinter.BOTH, expand=1)
+        Hosts_ListBox.pack(fill=Tkinter.BOTH, expand=1)
 
         # IP Address Entry
         frame_ip_address = Tkinter.Frame(app_window)
@@ -111,7 +119,7 @@ class mtkmgr():
         global entry_ip_address
         entry_ip_address = Tkinter.Entry(frame_ip_address)
         entry_ip_address.pack(fill=Tkinter.X, expand=1, side=Tkinter.LEFT)
-        button_add_ip_address = Tkinter.Button(frame_ip_address, text="Add", command=self.AddHost)
+        button_add_ip_address = Tkinter.Button(frame_ip_address, text="Add", command=self.Hosts_AddHost)
         button_add_ip_address.pack(fill=Tkinter.X, expand=1, side=Tkinter.LEFT)
 
         frame_SelectedHostActions = Tkinter.Frame(app_window)
@@ -119,6 +127,9 @@ class mtkmgr():
 
         btn_getSelectedHost = Tkinter.Button(frame_SelectedHostActions, text="Get Host Value", command=self.ReturnSelectedHost)
         btn_getSelectedHost.pack()
+
+        btn_removeHost = Tkinter.Button(frame_SelectedHostActions, text="Remove", command=self.Hosts_RemoveHost)
+        btn_removeHost.pack()
 
         # Display the window.
         app_window.mainloop()
