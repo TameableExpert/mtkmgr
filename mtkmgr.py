@@ -1,6 +1,9 @@
 #
 # MikroTik Manager - Making managing MikroTiks magical.
 #
+#
+# TODO: Create fields to add more information to the JSON vars.
+#
 
 import sys, os, io, json, datetime, Tkinter, subprocess, paramiko
 
@@ -79,6 +82,7 @@ class mtkmgr():
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         client.load_system_host_keys()
+        # TODO: set this to load using the IP address.
         client.connect('127.0.0.1')
         stdin, stdout, stderr = client.exec_command("touch /home/grimm/Desktop/test.txt")
         client.close()
