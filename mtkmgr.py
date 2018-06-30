@@ -112,7 +112,21 @@ class mtkmgr():
         app_window = Tkinter.Tk()
         app_window.title("MikroTik Manager")
         app_window.geometry("400x300")
+
+        # Top menu system
+        mtkmgr_menu = Tkinter.Menu(app_window)
+        # File Menu
+        file_menu = Tkinter.Menu(mtkmgr_menu)
         
+        file_export_menu = Tkinter.Menu(file_menu)
+        file_export_menu.add_command(label="Import")
+        file_export_menu.add_command(label="Export")
+        file_menu.add_cascade(label="Config", menu=file_export_menu)
+
+        file_menu.add_command(label="Quit", command=app_window.destroy)
+        mtkmgr_menu.add_cascade(label="File", menu=file_menu)
+        app_window.config(menu=mtkmgr_menu)
+
         # Existing Host List
         frame_hosts = Tkinter.Frame(app_window)
         frame_hosts.pack()
@@ -123,6 +137,15 @@ class mtkmgr():
         self.HostList_Load()
         Hosts_ListBox.pack(fill=Tkinter.BOTH, expand=1)
 
+        #Hostname Entry
+        frame_hostname = Tkinter.Frame(app_window)
+        frame_hostname.pack(fill=Tkinter.BOTH, expand=1)
+        label_hostname = Tkinter.Label(frame_hostname, text="Hostname")
+        label_hostname.pack(side=Tkinter.LEFT)
+        global entry_hostname
+        entry_hostname = Tkinter.Entry(frame_hostname)
+        entry_hostname.pack(fill=Tkinter.X, expand=1, side=Tkinter.LEFT)
+
         # IP Address Entry
         frame_ip_address = Tkinter.Frame(app_window)
         frame_ip_address.pack(fill=Tkinter.BOTH, expand=1)
@@ -131,14 +154,14 @@ class mtkmgr():
         global entry_ip_address
         entry_ip_address = Tkinter.Entry(frame_ip_address)
         entry_ip_address.pack(fill=Tkinter.X, expand=1, side=Tkinter.LEFT)
+        
+        # Add Host Button
         button_add_ip_address = Tkinter.Button(frame_ip_address, text="Add", command=self.Hosts_AddHost)
-        button_add_ip_address.pack(fill=Tkinter.X, expand=1, side=Tkinter.LEFT)
+        button_add_ip_address.pack(fill=Tkinter.X, expand=1, side=Tkinter.BOTTOM)
 
+        # Host Actions Frame & Buttons
         frame_SelectedHostActions = Tkinter.Frame(app_window)
         frame_SelectedHostActions.pack(fill=Tkinter.BOTH, expand=1, side=Tkinter.BOTTOM)
-        
-        #btn_getSelectedHost = Tkinter.Button(frame_SelectedHostActions, text="Get Host Value", command=self.ReturnSelectedHost)
-        #btn_getSelectedHost.pack()
 
         btn_connectHost = Tkinter.Button(frame_SelectedHostActions, text="Connect", command=self.Hosts_ConnectHost)
         btn_connectHost.pack()
