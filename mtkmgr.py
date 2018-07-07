@@ -3,6 +3,7 @@
 #
 #
 # TODO: Create fields to add more information to the JSON vars.
+# TODO: Restructure the GUI and allow for more variables to be saved.
 #
 
 import sys, os, io, json, datetime, Tkinter, subprocess, paramiko
