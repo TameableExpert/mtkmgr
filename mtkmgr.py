@@ -41,7 +41,7 @@ class mtkmgr():
         with open(self.log_fileName, "a+") as log_file:
             formatted_data = str(datetime.datetime.now()) + ": " + data + "\r"
             log_file.writelines(formatted_data)
-            print (formatted_data) # Print out to the terminal so I don't have to keep looking in the log file.
+            print(formatted_data) # Print out to the terminal so I don't have to keep looking in the log file.
 
     def LoadConfig(self):
         if os.path.isfile(self.conf_fileName):
@@ -69,8 +69,8 @@ class mtkmgr():
             entry_ip_address.delete(0, 'end')
             
         except Exception as err:
-            print (("Something went wrong!"), err)
-
+            print("Something went wrong!", err)
+            
     def Hosts_RemoveHost(self):
         selected_key = Hosts_ListBox.selection_get()
         selection = Hosts_ListBox.curselection()
@@ -107,7 +107,7 @@ class mtkmgr():
             self.LogData("Error: Configuration file empty.")
 
     def ReturnSelectedHost(self):
-        print (Hosts_ListBox.selection_get())
+        print(Hosts_ListBox.selection_get())
 
     def SetupInterface(self):
         app_window = tk.Tk()
