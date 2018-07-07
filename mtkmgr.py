@@ -70,7 +70,7 @@ class mtkmgr():
             
         except Exception as err:
             print("Something went wrong!", err)
-
+            
     def Hosts_RemoveHost(self):
         selected_key = Hosts_ListBox.selection_get()
         selection = Hosts_ListBox.curselection()
