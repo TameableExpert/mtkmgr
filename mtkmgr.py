@@ -6,7 +6,7 @@
 # TODO: Restructure the GUI and allow for more variables to be saved.
 #
 
-import sys, os, io, json, datetime, Tkinter, subprocess, paramiko
+import sys, os, io, json, datetime, tkinter as tk, subprocess, paramiko
 
 class mtkmgr():
     def __init__(self):
@@ -41,7 +41,7 @@ class mtkmgr():
         with open(self.log_fileName, "a+") as log_file:
             formatted_data = str(datetime.datetime.now()) + ": " + data + "\r"
             log_file.writelines(formatted_data)
-            print formatted_data # Print out to the terminal so I don't have to keep looking in the log file.
+            print(formatted_data) # Print out to the terminal so I don't have to keep looking in the log file.
 
     def LoadConfig(self):
         if os.path.isfile(self.conf_fileName):
@@ -68,8 +68,8 @@ class mtkmgr():
             self.HostList_Load()
             entry_ip_address.delete(0, 'end')
             
-        except Exception, err:
-            print "Something went wrong!", err
+        except Exception as err:
+            print("Something went wrong!", err)
 
     def Hosts_RemoveHost(self):
         selected_key = Hosts_ListBox.selection_get()
@@ -107,19 +107,19 @@ class mtkmgr():
             self.LogData("Error: Configuration file empty.")
 
     def ReturnSelectedHost(self):
-        print Hosts_ListBox.selection_get()
+        print(Hosts_ListBox.selection_get())
 
     def SetupInterface(self):
-        app_window = Tkinter.Tk()
+        app_window = tk.Tk()
         app_window.title("MikroTik Manager")
         app_window.geometry("400x300")
 
         # Top menu system
-        mtkmgr_menu = Tkinter.Menu(app_window)
+        mtkmgr_menu = tk.Menu(app_window)
         # File Menu
-        file_menu = Tkinter.Menu(mtkmgr_menu)
+        file_menu = tk.Menu(mtkmgr_menu)
         
-        file_export_menu = Tkinter.Menu(file_menu)
+        file_export_menu = tk.Menu(file_menu)
         file_export_menu.add_command(label="Import")
         file_export_menu.add_command(label="Export")
         file_menu.add_cascade(label="Config", menu=file_export_menu)
@@ -129,45 +129,45 @@ class mtkmgr():
         app_window.config(menu=mtkmgr_menu)
 
         # Existing Host List
-        frame_hosts = Tkinter.Frame(app_window)
+        frame_hosts = tk.Frame(app_window)
         frame_hosts.pack()
-        label_hosts = Tkinter.Label(frame_hosts, text="Hosts")
+        label_hosts = tk.Label(frame_hosts, text="Hosts")
         label_hosts.pack()
         global Hosts_ListBox
-        Hosts_ListBox = Tkinter.Listbox()
+        Hosts_ListBox = tk.Listbox()
         self.HostList_Load()
-        Hosts_ListBox.pack(fill=Tkinter.BOTH, expand=1)
+        Hosts_ListBox.pack(fill=tk.BOTH, expand=1)
 
         #Hostname Entry
-        frame_hostname = Tkinter.Frame(app_window)
-        frame_hostname.pack(fill=Tkinter.BOTH, expand=1)
-        label_hostname = Tkinter.Label(frame_hostname, text="Hostname")
-        label_hostname.pack(side=Tkinter.LEFT)
+        frame_hostname = tk.Frame(app_window)
+        frame_hostname.pack(fill=tk.BOTH, expand=1)
+        label_hostname = tk.Label(frame_hostname, text="Hostname")
+        label_hostname.pack(side=tk.LEFT)
         global entry_hostname
-        entry_hostname = Tkinter.Entry(frame_hostname)
-        entry_hostname.pack(fill=Tkinter.X, expand=1, side=Tkinter.LEFT)
+        entry_hostname = tk.Entry(frame_hostname)
+        entry_hostname.pack(fill=tk.X, expand=1, side=tk.LEFT)
 
         # IP Address Entry
-        frame_ip_address = Tkinter.Frame(app_window)
-        frame_ip_address.pack(fill=Tkinter.BOTH, expand=1)
-        label_ip_address = Tkinter.Label(frame_ip_address, text="IP Address")
-        label_ip_address.pack(side=Tkinter.LEFT)
+        frame_ip_address = tk.Frame(app_window)
+        frame_ip_address.pack(fill=tk.BOTH, expand=1)
+        label_ip_address = tk.Label(frame_ip_address, text="IP Address")
+        label_ip_address.pack(side=tk.LEFT)
         global entry_ip_address
-        entry_ip_address = Tkinter.Entry(frame_ip_address)
-        entry_ip_address.pack(fill=Tkinter.X, expand=1, side=Tkinter.LEFT)
+        entry_ip_address = tk.Entry(frame_ip_address)
+        entry_ip_address.pack(fill=tk.X, expand=1, side=tk.LEFT)
         
         # Add Host Button
-        button_add_ip_address = Tkinter.Button(frame_ip_address, text="Add", command=self.Hosts_AddHost)
-        button_add_ip_address.pack(fill=Tkinter.X, expand=1, side=Tkinter.BOTTOM)
+        button_add_ip_address = tk.Button(frame_ip_address, text="Add", command=self.Hosts_AddHost)
+        button_add_ip_address.pack(fill=tk.X, expand=1, side=tk.BOTTOM)
 
         # Host Actions Frame & Buttons
-        frame_SelectedHostActions = Tkinter.Frame(app_window)
-        frame_SelectedHostActions.pack(fill=Tkinter.BOTH, expand=1, side=Tkinter.BOTTOM)
+        frame_SelectedHostActions = tk.Frame(app_window)
+        frame_SelectedHostActions.pack(fill=tk.BOTH, expand=1, side=tk.BOTTOM)
 
-        btn_connectHost = Tkinter.Button(frame_SelectedHostActions, text="Connect", command=self.Hosts_ConnectHost)
+        btn_connectHost = tk.Button(frame_SelectedHostActions, text="Connect", command=self.Hosts_ConnectHost)
         btn_connectHost.pack()
 
-        btn_removeHost = Tkinter.Button(frame_SelectedHostActions, text="Remove", command=self.Hosts_RemoveHost)
+        btn_removeHost = tk.Button(frame_SelectedHostActions, text="Remove", command=self.Hosts_RemoveHost)
         btn_removeHost.pack()
 
         # Display the window.
