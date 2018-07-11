@@ -211,7 +211,7 @@ class outputManager():
 
 class MikroTik():
     def __init__(self):
-        print("MikroTik Created.")
+        pass
 
     def Connect(self):
         pass
