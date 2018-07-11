@@ -181,7 +181,7 @@ class userInterface():
         print("User Interface Initialized.")
 
     def CreateControl(self, argType, argName, argParent, *args, **kwargs):
-        log.ToConsole("Creating Control")
+        log.toConsole("Creating Control")
 
 class fileManager():
     def __init__(self):
@@ -191,7 +191,7 @@ class fileManager():
         return os.path.isfile(argFilepath)
 
     def CreateFile(self, argFilepath):
-        log.ToConsole("Creating File")
+        log.toConsole("Creating File")
         #open(argFilepath, "w+", 0, )
 
     def LoadFile(self, argFilepath, argCreate):
@@ -215,7 +215,5 @@ class MikroTik():
 
     def Connect(self):
         pass
-
-
 
 log = outputManager()
