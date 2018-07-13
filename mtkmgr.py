@@ -24,7 +24,7 @@ import json
 import datetime
 #import subprocess
 import paramiko
-import tkinter
+import tkinter as tk
 
 
 class mtkmgr():
