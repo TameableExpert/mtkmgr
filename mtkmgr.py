@@ -6,7 +6,15 @@
 # TODO: Restructure the GUI and allow for more variables to be saved.
 #
 
-import sys, os, io, json, datetime, tkinter as tk, subprocess, paramiko
+import sys
+import os
+import io
+import json
+#import datetime
+#import subprocess
+import paramiko
+from tkinter import Tk, Frame, Button
+
 
 class mtkmgr():
     tmpConfigFile = {}
@@ -179,13 +187,15 @@ class WindowManager():
     """ Setup the user interface! """
 
     def __init__(self):
-        print("User Interface Initialized.")
-
+        pass
+        
     def createControl(self, argType, argName, argParent):
-        log.toConsole("Creating Control")
+        pass
+        #log.toConsole("Creating Control")
 
-    def deleteControl(self, argTarget):
-        log.toConsole("Creating Control")
+    def deleteControl(self):
+        pass
+        #log.toConsole("Creating Control")
 
 class FileManager():
     """ Manages all interactions with files. """
@@ -217,16 +227,21 @@ class OutputManager():
 
 class NetworkDevice():
     """ A generic network device template. """
+
     def __init__(self, argIpAddress, argMacAddress):
         self.ipAddress = argIpAddress
         self.macAddress = argMacAddress
 
     def printIP(self):
         print(self.ipAddress)
-        
+
     def printMac(self):
         print(self.macAddress)
 
 class MikroTik(NetworkDevice):
+    """ MikroTik Network device. """
+
     def connect(self):
         pass
+
+window = WindowManager()
