@@ -1,10 +1,21 @@
 #
 # MikroTik Manager - Making managing MikroTiks magical.
 #
+# Goal:
+#   - Store Configuration
+#       - (!) Encrypt config
 #
-# TODO: Create fields to add more information to the JSON vars.
-# TODO: Restructure the GUI and allow for more variables to be saved.
+#   - Allow users to manage devices in a list.
+#       - IP Address
+#       - Username
+#           - Setup a "mtkmgr" user for access later (?)
 #
+#   - Allow users to issue commands to a device.
+#       - (!) Setup passwordless login 
+#       - Reboot Device
+#       - Update Device
+#       - (!) Backup Device
+#       - General Configuration
 
 import sys
 import os
