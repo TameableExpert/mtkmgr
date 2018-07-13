@@ -218,7 +218,8 @@ class FileManager():
         return os.path.isfile(argFilepath)
 
     def createFile(self, argFilepath):
-        log.toConsole("Creating File")
+        pass
+        #log.toConsole("Creating File")
         #open(argFilepath, "w+", 0, )
 
     def loadFile(self, argFilepath, argCreate):
@@ -255,4 +256,4 @@ class MikroTik(NetworkDevice):
     def connect(self):
         pass
 
-window = WindowManager()
+mtkmgr()
