@@ -177,6 +177,7 @@ class mtkmgr():
 
 class WindowManager():
     """ Setup the user interface! """
+
     def __init__(self):
         print("User Interface Initialized.")
 
@@ -203,6 +204,8 @@ class FileManager():
         tmpIsFile = os.path.isfile(argFilepath)
         
 class OutputManager():
+    """ All the output, all the time! """
+
     def __init__(self):
         print("Output Manager Initialized.")
     
@@ -211,10 +214,19 @@ class OutputManager():
 
     def toFile(self, argMessage):
         print("This needs to be updated.")
-        
-class MikroTik():
-    def __init__(self):
-        pass
 
-    def Connect(self):
+class NetworkDevice():
+    """ A generic network device template. """
+    def __init__(self, argIpAddress, argMacAddress):
+        self.ipAddress = argIpAddress
+        self.macAddress = argMacAddress
+
+    def printIP(self):
+        print(self.ipAddress)
+        
+    def printMac(self):
+        print(self.macAddress)
+
+class MikroTik(NetworkDevice):
+    def connect(self):
         pass
