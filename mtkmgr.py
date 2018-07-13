@@ -175,30 +175,34 @@ class mtkmgr():
         # Display the window.
         app_window.mainloop()
 
-class userInterface():
+class WindowManager():
     """ Setup the user interface! """
     def __init__(self):
         print("User Interface Initialized.")
 
-    def CreateControl(self, argType, argName, argParent, *args, **kwargs):
+    def createControl(self, argType, argName, argParent):
         log.toConsole("Creating Control")
 
-class fileManager():
+    def deleteControl(self, argTarget):
+        log.toConsole("Creating Control")
+
+class FileManager():
+    """ Manages all interactions with files. """
+    
     def __init__(self):
         print("File Manager Initialized!")
 
-    def FileExists(self, argFilepath, *args, **kwargs):
+    def fileExists(self, argFilepath):
         return os.path.isfile(argFilepath)
 
-    def CreateFile(self, argFilepath):
+    def createFile(self, argFilepath):
         log.toConsole("Creating File")
         #open(argFilepath, "w+", 0, )
 
-    def LoadFile(self, argFilepath, argCreate):
+    def loadFile(self, argFilepath, argCreate):
         tmpIsFile = os.path.isfile(argFilepath)
         
-
-class outputManager():
+class OutputManager():
     def __init__(self):
         print("Output Manager Initialized.")
     
@@ -208,12 +212,9 @@ class outputManager():
     def toFile(self, argMessage):
         print("This needs to be updated.")
         
-
 class MikroTik():
     def __init__(self):
         pass
 
     def Connect(self):
         pass
-
-log = outputManager()
