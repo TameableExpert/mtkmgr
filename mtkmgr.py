@@ -22,7 +22,6 @@ import os
 import io
 import json
 import datetime
-#import subprocess
 import paramiko
 import tkinter as tk
 
@@ -83,8 +82,9 @@ class mtkmgr():
 
     def Hosts_AddHost(self):
         try:
+            hostname = entry_hostname.get()
             ipaddress =  entry_ip_address.get()
-            self.current_config['hosts'][ipaddress] = {}
+            self.current_config['hosts'][hostname] = {"hostname":hostname,"ipaddress":ipaddress}
             self.SaveConfig()
             self.HostList_Load()
             entry_ip_address.delete(0, 'end')
@@ -121,7 +121,7 @@ class mtkmgr():
             if len(self.current_config['hosts']) > 0:
                 for key, value in self.current_config['hosts'].items():
                     Hosts_ListBox.insert(0, key) # Add host to listbox.
-                self.LogData("There are things here.")
+                #self.LogData("There are things here.")
             else:
                 self.LogData("Error: No records found.")
         else:
@@ -133,7 +133,6 @@ class mtkmgr():
     def SetupInterface(self):
         app_window = tk.Tk()
         app_window.title("MikroTik Manager")
-        #app_window.geometry("400x300")
 
         # Top menu system
         mtkmgr_menu = tk.Menu(app_window)
